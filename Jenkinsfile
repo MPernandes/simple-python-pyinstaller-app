@@ -8,14 +8,15 @@ node {
             sh '''
                 apt-get update
                 apt-get install -y python3 python3-pip
-                pip3 install -r requirements.txt
+                python -m py_compile sources/add2vals.py sources/calc.py
+                stash(name: 'compiled-results', includes: 'sources/*.py*')
             '''
         }
     }
 
     stage('Test') {
         docker.image('python:3.9-slim').inside('-p 5000:5000') {
-            sh './jenkins/scripts/test.sh'
+            sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
         }
     }
 }
