@@ -4,8 +4,15 @@ node {
             git 'https://github.com/MPernandes/simple-python-pyinstaller-app.git'
         }
 
+        stage('Install Python3 and Pip3') {
+            sh '''
+                sudo apt update
+                sudo apt install -y python3 python3-pip
+            '''
+        }
+
         stage('Install Dependencies') {
-            sh 'pip install -r requirements.txt'
+            sh 'pip3 install -r requirements.txt'
         }
 
         stage('Build Executable') {
