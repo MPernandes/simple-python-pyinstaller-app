@@ -4,7 +4,7 @@ node {
     }
 
     stage('Build') {
-        docker.image('python:3.9-slim').inside('-p 5000:5000') {
+        docker.image('python:3.9-slim').inside('--user root -p 5000:5000') {
             sh '''
                 sudo apt-get update
                 sudo apt-get install -y python3 python3-pip
