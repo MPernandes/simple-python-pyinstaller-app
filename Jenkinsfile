@@ -1,36 +1,21 @@
 node {
-    try {
-        stage('Checkout') {
-            git 'https://github.com/MPernandes/simple-python-pyinstaller-app.git'
-        }
+    stage('Prepare Environment') {
+        sh 'docker pull python:3.9-slim'
+    }
 
-        stage('Install Python3 and Pip3') {
+    stage('Build') {
+        docker.image('python:3.9-slim').inside('-p 5000:5000') {
             sh '''
-                sudo apt update
-                sudo apt install -y python3 python3-pip
+                apt-get update
+                apt-get install -y python3 python3-pip
+                pip3 install -r requirements.txt
             '''
         }
+    }
 
-        stage('Install Dependencies') {
-            sh 'pip3 install -r requirements.txt'
+    stage('Test') {
+        docker.image('python:3.9-slim').inside('-p 5000:5000') {
+            sh './jenkins/scripts/test.sh'
         }
-
-        stage('Build Executable') {
-            sh 'pyinstaller --onefile your_script.py'
-        }
-
-        stage('Test') {
-            // Example test command, replace with actual tests
-            sh 'pytest tests/'
-        }
-
-        stage('Archive Artifacts') {
-            archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/*'
-        }
-    } catch (Exception e) {
-        currentBuild.result = 'FAILURE'
-        throw e
-    } finally {
-        cleanWs()
     }
 }
