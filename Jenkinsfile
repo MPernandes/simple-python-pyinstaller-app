@@ -1,22 +1,30 @@
-node {
-    stage('Prepare Environment') {
-        sh 'docker pull python:3.9-slim'
-    }
-
-    stage('Build') {
-        docker.image('python:3.9-slim').inside('--user root -p 5000:5000') {
-            sh '''
-                apt-get update
-                apt-get install -y python3 python3-pip
-                python -m py_compile sources/add2vals.py sources/calc.py
-                stash(name: 'compiled-results', includes: 'sources/*.py*')
-            '''
+pipeline {
+    agent none
+    stages {
+        stage('Build') {
+            agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }
+            steps {
+                sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+            }
         }
-    }
-
-    stage('Test') {
-        docker.image('python:3.9-slim').inside('-p 5000:5000') {
-            sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
+        stage('Test') {
+            agent {
+                docker {
+                    image 'qnib/pytest'
+                }
+            }
+            steps {
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
         }
     }
 }
