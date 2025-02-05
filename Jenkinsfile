@@ -6,9 +6,9 @@ node {
     stage('Build') {
         docker.image('python:3.9-slim').inside('--user root -p 5000:5000') {
             sh '''
-                sudo apt-get update
-                sudo apt-get install -y python3 python3-pip
-                sudo pip3 install -r requirements.txt
+                apt-get update
+                apt-get install -y python3 python3-pip
+                pip3 install -r requirements.txt
             '''
         }
     }
