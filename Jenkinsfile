@@ -1,7 +1,7 @@
 node {
     stage('Build') {
         docker.image('python:2-alpine').inside {
-            sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+            sh 'python -m py_compile sources/add2vals1.py sources/calc.py'
         }
     }
 
@@ -18,11 +18,11 @@ node {
     stage('Deploy') {
         try {
             docker.image('cdrx/pyinstaller-linux:python2').inside {
-                sh 'pyinstaller --onefile sources/add2vals.py'
+                sh 'pyinstaller --onefile sources/add2vals1.py'
             }
 
             // Mengarsipkan hasil build jika sukses
-            archiveArtifacts 'dist/add2vals'
+            archiveArtifacts 'dist/add2vals1'
         } catch (err) {
             echo "Pipeline gagal: ${err}"
             currentBuild.result = 'FAILURE'
