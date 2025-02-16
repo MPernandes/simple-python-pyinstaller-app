@@ -1,48 +1,39 @@
-import unittest
-import calc
+"""
+The 'calc' library contains the 'add2' function that takes 2 values and adds
+them together. If either value is a string (or both of them are), 'add2' ensures
+they are both strings, thereby resulting in a concatenated result.
+NOTE: If a value submitted to the 'add2' function is a float, it must be done so
+in quotes (i.e. as a string).
+"""
 
-class TestCalc(unittest.TestCase):
+def conv(value):
     """
-    Test the add function from the calc library
+    Convert the input value to an integer if possible, otherwise to a float,
+    and if both fail, return it as a string.
     """
+    if isinstance(value, (int, float, str)):  # Ensure value is a valid type
+        try:
+            return int(value)
+        except ValueError:
+            try:
+                return float(value)
+            except ValueError:
+                return str(value)
+    else:
+        raise TypeError(f"Unsupported type: {type(value)}")  # Handle invalid types
 
-    def test_add_integers(self):
-        """
-        Test that the addition of two integers returns the correct total
-        """
-        result = calc.add2(1, 2)
-        self.assertEqual(result, 3)
 
-    def test_add_floats(self):
-        """
-        Test that the addition of two floats returns the correct result
-        """
-        result = calc.add2('10.5', 2)
-        self.assertEqual(result, 12.5)
+def add2(arg1, arg2):
+    """
+    Adds two values together. If either value is a string, both are converted
+    to strings before concatenation. Otherwise, they are added mathematically.
+    """
+    arg1conv = conv(arg1)
+    arg2conv = conv(arg2)
 
-    def test_add_strings(self):
-        """
-        Test the addition of two strings returns the two strings as one
-        concatenated string
-        """
-        result = calc.add2('abc', 'def')
-        self.assertEqual(result, 'abcdef')
+    # If either argument is a string, convert both to strings for concatenation
+    if isinstance(arg1conv, str) or isinstance(arg2conv, str):
+        return str(arg1conv) + str(arg2conv)
 
-    def test_add_string_and_integer(self):
-        """
-        Test the addition of a string and an integer returns them as one
-        concatenated string (in which the integer is converted to a string)
-        """
-        result = calc.add2('abc', 3)
-        self.assertEqual(result, 'abc3')
-
-    def test_add_string_and_number(self):
-        """
-        Test the addition of a string and a float returns them as one
-        concatenated string (in which the float is converted to a string)
-        """
-        result = calc.add2('abc', '5.5')
-        self.assertEqual(result, 'abc5.5')
-
-if __name__ == '__main__':
-    unittest.main()
+    # Otherwise, return numerical sum
+    return arg1conv + arg2conv

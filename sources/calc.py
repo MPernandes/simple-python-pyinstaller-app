@@ -1,28 +1,39 @@
-'''
+"""
 The 'calc' library contains the 'add2' function that takes 2 values and adds
-them together. If either value is a string (or both of them are) 'add2' ensures
+them together. If either value is a string (or both of them are), 'add2' ensures
 they are both strings, thereby resulting in a concatenated result.
 NOTE: If a value submitted to the 'add2' function is a float, it must be done so
 in quotes (i.e. as a string).
-'''
+"""
 
-# If 'value' is not an integer, convert it to a float and failing that, a string.
 def conv(value):
-    try:
-        return int(value)
-    except ValueError:
+    """
+    Convert the input value to an integer if possible, otherwise to a float,
+    and if both fail, return it as a string.
+    """
+    if isinstance(value, (int, float, str)):  # Ensure value is a valid type
         try:
-            return float(value)
+            return int(value)
         except ValueError:
-            return str(value)
+            try:
+                return float(value)
+            except ValueError:
+                return str(value)
+    else:
+        raise TypeError(f"Unsupported type: {type(value)}")  # Handle invalid types
 
-# The 'add2' function itself
+
 def add2(arg1, arg2):
-    # Convert 'arg1' and 'arg2' to their appropriate types
+    """
+    Adds two values together. If either value is a string, both are converted
+    to strings before concatenation. Otherwise, they are added mathematically.
+    """
     arg1conv = conv(arg1)
     arg2conv = conv(arg2)
-    # If either 'arg1' or 'arg2' is a string, ensure they're both strings.
+
+    # If either argument is a string, convert both to strings for concatenation
     if isinstance(arg1conv, str) or isinstance(arg2conv, str):
-        arg1conv = str(arg1conv)
-        arg2conv = str(arg2conv)
+        return str(arg1conv) + str(arg2conv)
+
+    # Otherwise, return numerical sum
     return arg1conv + arg2conv
