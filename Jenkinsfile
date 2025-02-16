@@ -14,4 +14,17 @@ node {
     stage('Publish Results') {
         junit 'test-reports/results.xml'
     }
+
+
+    stage{'Deploy'} {
+    docker.image('cdrx/pyinstaller-linux:python2').inside {
+                sh 'pyinstaller --onefile sources/add2vals.py'
+            }
+     
+            // Mengarsipkan hasil build jika sukses
+            archiveArtifacts 'dist/add2vals'
+        } catch (err) {
+            echo "Pipeline gagal: ${err}"
+            currentBuild.result = 'FAILURE'
+        }
 }
