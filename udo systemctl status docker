@@ -1,0 +1,50 @@
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.239601626+07:00" level=info msg="Loading containers: done."
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.382793492+07:00" level=warning msg="WARNING: No blkio throttle.read_bps_device support"
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.382823673+07:00" level=warning msg="WARNING: No blkio throttle.write_bps_device support"
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.382827787+07:00" level=warning msg="WARNING: No blkio throttle.read_iops_device support"
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.382852596+07:00" level=warning msg="WARNING: No blkio throttle.write_iops_device support"
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.385261644+07:00" level=info msg="Docker daemon" commit=38b84dc containerd-snapshotter=false storage-driver=overlay2 version=27.5.0
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.387904502+07:00" level=info msg="Daemon has completed initialization"
+Feb 24 19:29:02 KMB-60 dockerd[87194]: time="2025-02-24T19:29:02.639697345+07:00" level=info msg="API listen on /run/docker.sock"
+Feb 24 19:29:02 KMB-60 systemd[1]: Started docker.service - Docker Application Container Engine.
+Feb 24 19:30:26 KMB-60 systemd[1]: Stopping docker.service - Docker Application Container Engine...
+Feb 24 19:30:26 KMB-60 dockerd[87194]: time="2025-02-24T19:30:26.851872022+07:00" level=info msg="Processing signal 'terminated'"
+Feb 24 19:30:26 KMB-60 dockerd[87194]: time="2025-02-24T19:30:26.958374388+07:00" level=info msg="Daemon shutdown complete"
+Feb 24 19:30:26 KMB-60 systemd[1]: docker.service: Deactivated successfully.
+Feb 24 19:30:26 KMB-60 systemd[1]: Stopped docker.service - Docker Application Container Engine.
+Feb 24 19:30:26 KMB-60 systemd[1]: Starting docker.service - Docker Application Container Engine...
+Feb 24 19:30:27 KMB-60 dockerd[87877]: time="2025-02-24T19:30:27.394897973+07:00" level=info msg="Starting up"
+Feb 24 19:30:27 KMB-60 dockerd[87877]: time="2025-02-24T19:30:27.400482088+07:00" level=info msg="OTEL tracing is not configured, using no-op tracer provider"
+Feb 24 19:30:27 KMB-60 dockerd[87877]: time="2025-02-24T19:30:27.608463663+07:00" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Feb 24 19:30:27 KMB-60 dockerd[87877]: time="2025-02-24T19:30:27.623302611+07:00" level=info msg="Loading containers: start."
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.418477384+07:00" level=info msg="Default bridge (docker0) is assigned with an IP address 172.18.0.0/16. Daemon option --bip can be used to set a preferred IP address"
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.823542692+07:00" level=info msg="Loading containers: done."
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.859277976+07:00" level=warning msg="WARNING: No blkio throttle.read_bps_device support"
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.859322001+07:00" level=warning msg="WARNING: No blkio throttle.write_bps_device support"
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.859328407+07:00" level=warning msg="WARNING: No blkio throttle.read_iops_device support"
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.859337911+07:00" level=warning msg="WARNING: No blkio throttle.write_iops_device support"
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.859363841+07:00" level=info msg="Docker daemon" commit=38b84dc containerd-snapshotter=false storage-driver=overlay2 version=27.5.0
+Feb 24 19:30:30 KMB-60 dockerd[87877]: time="2025-02-24T19:30:30.859889336+07:00" level=info msg="Daemon has completed initialization"
+Feb 24 19:30:31 KMB-60 dockerd[87877]: time="2025-02-24T19:30:31.073574351+07:00" level=info msg="API listen on /run/docker.sock"
+Feb 24 19:30:31 KMB-60 systemd[1]: Started docker.service - Docker Application Container Engine.
+Feb 24 19:31:18 KMB-60 systemd[1]: Stopping docker.service - Docker Application Container Engine...
+Feb 24 19:31:18 KMB-60 dockerd[87877]: time="2025-02-24T19:31:18.073765304+07:00" level=info msg="Processing signal 'terminated'"
+Feb 24 19:31:18 KMB-60 dockerd[87877]: time="2025-02-24T19:31:18.203287372+07:00" level=info msg="stopping event stream following graceful shutdown" error="<nil>" module=libcontainerd namespace=moby
+Feb 24 19:31:18 KMB-60 dockerd[87877]: time="2025-02-24T19:31:18.205737432+07:00" level=info msg="Daemon shutdown complete"
+Feb 24 19:31:18 KMB-60 systemd[1]: docker.service: Deactivated successfully.
+Feb 24 19:31:18 KMB-60 systemd[1]: Stopped docker.service - Docker Application Container Engine.
+Feb 24 19:35:51 KMB-60 systemd[1]: Starting docker.service - Docker Application Container Engine...
+Feb 24 19:35:53 KMB-60 dockerd[90136]: time="2025-02-24T19:35:53.033731203+07:00" level=info msg="Starting up"
+Feb 24 19:35:53 KMB-60 dockerd[90136]: time="2025-02-24T19:35:53.050458999+07:00" level=info msg="OTEL tracing is not configured, using no-op tracer provider"
+Feb 24 19:35:54 KMB-60 dockerd[90136]: time="2025-02-24T19:35:54.007371999+07:00" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Feb 24 19:35:54 KMB-60 dockerd[90136]: time="2025-02-24T19:35:54.044241122+07:00" level=info msg="Loading containers: start."
+Feb 24 19:35:55 KMB-60 dockerd[90136]: time="2025-02-24T19:35:55.926187321+07:00" level=info msg="Default bridge (docker0) is assigned with an IP address 172.18.0.0/16. Daemon option --bip can be used to set a preferred IP address"
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.308809132+07:00" level=info msg="Loading containers: done."
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.418855071+07:00" level=warning msg="WARNING: No blkio throttle.read_bps_device support"
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.418934415+07:00" level=warning msg="WARNING: No blkio throttle.write_bps_device support"
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.418943698+07:00" level=warning msg="WARNING: No blkio throttle.read_iops_device support"
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.418963450+07:00" level=warning msg="WARNING: No blkio throttle.write_iops_device support"
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.419042362+07:00" level=info msg="Docker daemon" commit=38b84dc containerd-snapshotter=false storage-driver=overlay2 version=27.5.0
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.419981450+07:00" level=info msg="Daemon has completed initialization"
+Feb 24 19:35:56 KMB-60 dockerd[90136]: time="2025-02-24T19:35:56.850045452+07:00" level=info msg="API listen on /run/docker.sock"
+Feb 24 19:35:56 KMB-60 systemd[1]: Started docker.service - Docker Application Container Engine.
