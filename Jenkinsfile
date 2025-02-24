@@ -1,54 +1,50 @@
 pipeline {
     agent none
-
     stages {
         stage('Build') {
             agent {
                 docker {
-                    image 'python:2.7'
+                    image 'python:3.12-slim'
                 }
             }
             steps {
-                echo 'Memulai proses Build...'
+                echo '🚀 Memulai proses Build...'
                 sh '''
-                   mkdir -p sources/__pycache__
+                   python -m pip install --upgrade pip
                    python -m py_compile sources/add2vals.py sources/calc.py
-                   ls -lh sources/__pycache__
                 '''
             }
         }
-
         stage('Test') {
             agent {
                 docker {
-                    image 'qnib/pytest'
+                    image 'python:3.12-slim'
                 }
             }
             steps {
-                echo 'Menjalankan pengujian (Test)...'
+                echo '✅ Menjalankan Pengujian...'
                 sh '''
+                   python -m pip install pytest
                    mkdir -p test-reports
-                   py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py || exit 1
+                   pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py || exit 1
                 '''
             }
             post {
                 always {
-                    echo 'Mengarsipkan hasil pengujian...'
+                    echo '📊 Mengarsipkan hasil pengujian...'
                     junit 'test-reports/results.xml'
                 }
             }
         }
-
-        stage('Deploy') {
+        stage('Deliver') {
             agent {
                 docker {
-                    image 'python:2.7'
+                    image 'python:3.12-slim'
                 }
             }
             steps {
-                echo 'Memulai proses Deploy...'
+                echo '📦 Membuat binary dengan PyInstaller...'
                 sh '''
-                    python -m pip install --upgrade pip
                     python -m pip install pyinstaller
                     pyinstaller --onefile sources/add2vals.py
                     ls -lh dist/
@@ -56,11 +52,11 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Mengarsipkan hasil deploy...'
+                    echo '📂 Mengarsipkan binary...'
                     archiveArtifacts artifacts: 'dist/add2vals', fingerprint: true
                 }
                 failure {
-                    echo 'Gagal deploy! Periksa log untuk detailnya.'
+                    echo '❌ Gagal membuat binary. Periksa log.'
                 }
             }
         }
