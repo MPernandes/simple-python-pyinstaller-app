@@ -17,6 +17,7 @@ pipeline {
             agent {
                 docker {
                     image 'qnib/pytest'
+                    args '--user root'
                 }
             }
             steps {
@@ -32,6 +33,7 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.9'
+                    args '--user root'
                 }
             }
             steps {
