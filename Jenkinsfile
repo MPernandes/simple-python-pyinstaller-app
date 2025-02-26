@@ -1,24 +1,38 @@
 pipeline {
     agent none
+
     stages {
+        stage('Checkout') {
+            agent any
+            steps {
+                // Clone repository
+                checkout scm
+            }
+        }
+
         stage('Build') {
             agent {
                 docker {
                     image 'python:2-alpine'
+                    args '--user root'
                 }
             }
             steps {
+                sh 'ls -R' // Debug: cek struktur direktori
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py'
             }
         }
+
         stage('Test') {
             agent {
                 docker {
-                    image 'qnib/pytest'
+                    image 'python:3.9'
+                    args '--user root'
                 }
             }
             steps {
-                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+                sh 'pip install pytest'
+                sh 'pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             post {
                 always {
@@ -26,21 +40,29 @@ pipeline {
                 }
             }
         }
+
         stage('Deliver') {
             agent {
                 docker {
-                 image ('python:3.9'),inside('--user root')
+                    image 'python:3.9'
+                    args '--user root'
                 }
             }
             steps {
-                 sh 'pip install pyinstaller'
+                sh 'pip install pyinstaller'
                 sh 'pyinstaller --onefile sources/add2vals.py'
             }
             post {
                 success {
-                    archiveArtifacts 'dist/add2vals'
+                    archiveArtifacts artifacts: 'dist/add2vals', fingerprint: true
                 }
             }
         }
     }
-}
+
+    post {
+        always {
+            cleanWs() // Membersihkan workspace setelah pipeline selesai
+        }
+    }
+} 
