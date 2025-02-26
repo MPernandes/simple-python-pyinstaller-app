@@ -1,34 +1,46 @@
-node {
-    stage('Build') {
-        docker.image('python:2-alpine').inside {
-            sh 'python -m py_compile sources/add2vals.py sources/calc.py'
-        }
-    }
-
-    stage('Test') {
-        docker.image('qnib/pytest').inside {
-            try {
-                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
-            } finally {
-                junit 'test-reports/results.xml'
+pipeline {
+    agent none
+    stages {
+        stage('Build') {
+            agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }
+            steps {
+                sh 'python -m py_compile sources/add2vals.py sources/calc.py'
             }
         }
-    }
-
-    stage('Manual Approval') {
-        input message: 'Lanjutkan ke tahap Deploy? (Klik "Proceed" untuk lanjut)'
-    }
-
-    stage('Deploy') {
-        docker.image('python:3.9').inside('--user root') {
-            sh 'pip install pyinstaller'
-            sh 'pyinstaller --onefile sources/add2vals.py'
-            archiveArtifacts 'dist/add2vals'
-
-            // Menjeda eksekusi selama 1 menit setelah deploy
-            echo 'Menunggu 1 menit agar aplikasi berjalan...'
-            sleep(time: 1, unit: 'MINUTES')
-            echo 'Proses deploy selesai, pipeline berhasil!'
+        stage('Test') {
+            agent {
+                docker {
+                    image 'qnib/pytest'
+                }
+            }
+            steps {
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
+        }
+        stage('Deliver') {
+            agent {
+                docker {
+                    image 'python:3.9'
+                }
+            }
+            steps {
+                sh 'pip install pyinstaller'
+                sh 'pyinstaller --onefile sources/add2vals.py'
+            }
+            post {
+                success {
+                    archiveArtifacts 'dist/add2vals'
+                }
+            }
         }
     }
 }
